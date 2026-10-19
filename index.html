@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming soon</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- הבמה: עמוד "בקרוב" לפי הפריים בפיגמה -->
+  <main class="stage">
+
+    <!-- הסלע -->
+    <img class="rock" src="images/rock.png" alt="">
+
+    <!-- הכיתוב "coming soon", מחולק לשלושה חלקים כמו בפיגמה -->
+    <h1 class="headline" aria-label="coming soon">
+      <span class="rotated-box headline-comi" aria-hidden="true"><span class="headline-part">comi</span></span>
+      <span class="rotated-box headline-ng" aria-hidden="true"><span class="headline-part">ng</span></span>
+      <span class="headline-part headline-soon" aria-hidden="true">soon</span>
+    </h1>
+
+    <!-- החייזר הירוק שמציץ מאחורי הסלע -->
+    <div class="rotated-box alien-box">
+      <div class="alien">
+        <div class="alien-body">
+          <img src="images/alien-layer-1.png" alt="">
+          <img src="images/alien-layer-2.png" alt="">
+        </div>
+        <div class="rotated-box alien-cigar-box">
+          <img class="alien-cigar" src="images/alien-cigar.png" alt="">
+        </div>
+        <div class="alien-faces">
+          <img src="images/alien-face-1.gif" alt="">
+          <img src="images/alien-face-2.gif" alt="">
+          <img src="images/alien-face-3.gif" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- מסגרת הבחירה הכחולה סביב הדג -->
+    <div class="rotated-box selection-frame-box">
+      <div class="selection-frame">
+        <img src="images/selection-box.svg" width="639.078" height="350.492" alt="">
+      </div>
+    </div>
+    <div class="rotated-box handle-box handle-top"><div class="handle-square"></div></div>
+    <div class="rotated-box handle-box handle-bottom"><div class="handle-square"></div></div>
+    <div class="rotated-box handle-dot-box">
+      <img class="handle-dot" src="images/selection-dot.svg" width="23.049" height="23.049" alt="">
+    </div>
+
+    <!-- הדג -->
+    <div class="rotated-box fish-box">
+      <div class="fish">
+        <img src="images/fish.png" alt="">
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

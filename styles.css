@@ -1,0 +1,286 @@
+/* ===== משתנים: צבעים, פונטים ומידות מהפיגמה ===== */
+:root {
+  /* צבעים */
+  --color-background: #ffffff;
+  --color-text: #000000;
+  --color-handle-fill: #d9d9d9;
+  --color-handle-border: #006aa7;
+
+  /* פונט */
+  --font-display: "80-kb Grunge", monospace;
+  --font-size-display: 198.508px;
+
+  /* גודל הפריים בפיגמה (העמוד מוקטן/מוגדל כדי להיכנס למסך) */
+  --stage-width: 1440px;
+  --stage-height: 1024px;
+
+  /* ריבועי הבחירה סביב הדג */
+  --handle-size: 22px;
+  --handle-border: 5px;
+  --handle-rotation: -18.91deg;
+}
+
+/* טעינת הפונט מתוך תיקיית fonts */
+@font-face {
+  font-family: "80-kb Grunge";
+  src: url("fonts/80-kb-Grunge.otf") format("opentype");
+  font-display: swap;
+}
+
+/* ===== בסיס ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* העמוד תופס מסך אחד בדיוק, בלי גלילה */
+body {
+  background: var(--color-background);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== הבמה: הפריים מהפיגמה בגודל המקורי =====
+   script.js מחשב את --stage-scale כך שהבמה תיכנס לכל מסך */
+.stage {
+  position: relative;
+  flex: none;
+  width: var(--stage-width);
+  height: var(--stage-height);
+  background: var(--color-background);
+  overflow: hidden;
+  transform: scale(var(--stage-scale, 1));
+}
+
+/* כל חלק בבמה ממוקם במדויק לפי הפיגמה */
+.stage > * {
+  position: absolute;
+}
+
+/* עוטפן שמרכז אלמנט מסובב בתוך התיבה שלו */
+.rotated-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rotated-box > * {
+  flex: none;
+}
+
+/* ===== הסלע ===== */
+.rock {
+  left: -36px;
+  top: 361px;
+  width: 740px;
+  height: 740px;
+  object-fit: cover;
+}
+
+/* ===== הכיתוב "coming soon" ===== */
+/* הכותרת עצמה לא תופסת מקום; שלושת החלקים שלה ממוקמים בנפרד */
+.headline {
+  display: contents;
+}
+
+.headline > span {
+  position: absolute;
+}
+
+.headline-part {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  font-weight: normal;
+  line-height: normal;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.headline-comi {
+  left: 391px;
+  top: 397px;
+  width: 425.539px;
+  height: 439.284px;
+}
+
+.headline-comi > span {
+  transform: rotate(47.26deg);
+}
+
+.headline-ng {
+  left: 704px;
+  top: 711px;
+  width: 267.329px;
+  height: 249.383px;
+}
+
+.headline-ng > span {
+  transform: rotate(21.64deg);
+}
+
+.headline-soon {
+  left: 986px;
+  top: 836px;
+  width: 433.76px;
+}
+
+/* ===== החייזר על הסלע ===== */
+.alien-box {
+  left: 28.75px;
+  top: 457.65px;
+  width: 175.076px;
+  height: 165.237px;
+}
+
+.alien {
+  position: relative;
+  width: 142.688px;
+  height: 101.449px;
+  transform: rotate(-35.29deg);
+}
+
+/* שתי שכבות של גוף החייזר, אחת מעל השנייה */
+.alien-body {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 142.675px;
+  height: 101.458px;
+}
+
+.alien-body img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.alien-cigar-box {
+  position: absolute;
+  left: 32.75px;
+  top: 64.2px;
+  width: 30.581px;
+  height: 28.006px;
+}
+
+.alien-cigar {
+  width: 27.16px;
+  height: 24.064px;
+  object-fit: cover;
+  transform: rotate(-171.03deg) scaleY(-1);
+}
+
+/* שלוש תמונות הפנים, אחת מתחת לשנייה */
+.alien-faces {
+  position: absolute;
+  left: 74.19px;
+  top: 27.96px;
+  width: 20.17px;
+  display: flex;
+  flex-direction: column;
+}
+
+.alien-faces img {
+  width: 100%;
+  aspect-ratio: 272 / 241;
+  object-fit: cover;
+}
+
+/* ===== מסגרת הבחירה סביב הדג ===== */
+.selection-frame-box {
+  left: 745px;
+  top: 41.26px;
+  width: 619.493px;
+  height: 499.443px;
+}
+
+.selection-frame {
+  position: relative;
+  width: 537px;
+  height: 344px;
+  transform: rotate(var(--handle-rotation));
+}
+
+.selection-frame img {
+  position: absolute;
+  top: 0;
+  right: -8.61%;
+  bottom: -1.89%;
+  left: -10.4%;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+}
+
+/* ריבועים ונקודה שנמצאים מחוץ למסגרת */
+.handle-box {
+  width: 27.942px;
+  height: 27.942px;
+}
+
+.handle-square {
+  width: var(--handle-size);
+  height: var(--handle-size);
+  background: var(--color-handle-fill);
+  border: var(--handle-border) solid var(--color-handle-border);
+  transform: rotate(var(--handle-rotation));
+}
+
+.handle-top {
+  left: 1285.06px;
+  top: 26px;
+}
+
+.handle-bottom {
+  left: 1389.4px;
+  top: 330.63px;
+}
+
+.handle-dot-box {
+  left: 1336.42px;
+  top: 179.52px;
+  width: 29.274px;
+  height: 29.274px;
+}
+
+.handle-dot {
+  display: block;
+  width: 23.049px;
+  height: 23.049px;
+  transform: rotate(var(--handle-rotation));
+}
+
+/* ===== הדג ===== */
+.fish-box {
+  left: 751.06px;
+  top: -53px;
+  width: 688.662px;
+  height: 665.722px;
+}
+
+.fish {
+  position: relative;
+  width: 550.678px;
+  height: 513.47px;
+  overflow: hidden;
+  transform: rotate(160.85deg) scaleY(-1);
+}
+
+.fish img {
+  position: absolute;
+  left: 0;
+  top: -140.88%;
+  width: 100%;
+  height: 357.3%;
+  max-width: none;
+}

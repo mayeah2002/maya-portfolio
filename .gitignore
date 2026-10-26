@@ -1,3 +1,6 @@
 # Font file is not committed (license)
 fonts/
+!fonts/
+fonts/*
+!fonts/80-kb-Grunge.otf
 .DS_Store

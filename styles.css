@@ -5,14 +5,48 @@
   --color-text: #2100ff;
   --color-handle-fill: #d9d9d9;
   --color-handle-border: #006aa7;
+  --color-project-yellow: #ffed00;
 
   /* פונט */
   --font-display: "80-kb Grunge", monospace;
+  --font-hebrew: "80-kb Grunge", Arial, sans-serif;
   --font-size-display: 198.508px;
+  --font-size-process-title: 155px;
+  --font-size-process-label: 58px;
+  --font-size-three-ways-label: 64px;
+  --font-size-three-ways-title: 185px;
+  --font-size-arrow: 30px;
 
   /* גודל הפריים בפיגמה (העמוד מוקטן/מוגדל כדי להיכנס למסך) */
   --stage-width: 1440px;
   --stage-height: 1024px;
+  --page-gutter: 64px;
+  --frame-border-width: 5px;
+  --video-accent-height: 14px;
+  --page-title-rotation: 9deg;
+  --process-preview-top: 250px;
+  --process-preview-width: 560px;
+  --process-preview-height: 394px;
+  --process-copy-left: 620px;
+  --process-copy-top: 105px;
+  --process-copy-width: 760px;
+  --process-copy-height: 780px;
+  --next-page-top: 890px;
+  --navigation-width: 92px;
+  --navigation-height: 44px;
+  --three-ways-copy-left: 740px;
+  --three-ways-copy-top: 35px;
+  --three-ways-copy-width: 650px;
+  --three-ways-copy-height: 485px;
+  --video-first-top: 60px;
+  --video-first-width: 650px;
+  --video-first-height: 370px;
+  --video-second-top: 475px;
+  --video-second-height: 445px;
+  --video-third-left: 790px;
+  --video-third-top: 565px;
+  --video-third-width: 590px;
+  --video-third-height: 370px;
 
   /* ריבועי הבחירה סביב הדג */
   --handle-size: 22px;
@@ -306,4 +340,145 @@ body {
 .process-link:focus-visible {
   outline: 3px solid var(--color-handle-border);
   outline-offset: 4px;
+}
+
+/* עמוד התהליך */
+.process-preview {
+  left: var(--page-gutter);
+  top: var(--process-preview-top);
+  width: var(--process-preview-width);
+  height: var(--process-preview-height);
+  border: var(--frame-border-width) solid var(--color-text);
+}
+
+.process-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.process-copy {
+  left: var(--process-copy-left);
+  top: var(--process-copy-top);
+  width: var(--process-copy-width);
+  height: var(--process-copy-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transform: rotate(var(--page-title-rotation));
+}
+
+.process-label,
+.three-ways-label {
+  font-family: var(--font-hebrew);
+  font-size: var(--font-size-process-label);
+}
+
+.process-title,
+.three-ways-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-hebrew);
+  font-size: var(--font-size-process-title);
+  font-weight: normal;
+  line-height: 1.12;
+}
+
+.next-page-link {
+  left: var(--page-gutter);
+  top: var(--next-page-top);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--navigation-width);
+  height: var(--navigation-height);
+  border-radius: 999px;
+  background: var(--color-text);
+  color: var(--color-background);
+  font-family: Arial, sans-serif;
+  font-size: var(--font-size-arrow);
+  line-height: 1;
+  text-decoration: none;
+}
+
+.next-page-link:focus-visible,
+.process-preview:focus-visible {
+  outline: 3px solid var(--color-handle-border);
+  outline-offset: 5px;
+}
+
+/* עמוד שלוש הדרכים */
+.three-ways-copy {
+  left: var(--three-ways-copy-left);
+  top: var(--three-ways-copy-top);
+  width: var(--three-ways-copy-width);
+  height: var(--three-ways-copy-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transform: rotate(var(--page-title-rotation));
+}
+
+.three-ways-label {
+  font-size: var(--font-size-three-ways-label);
+}
+
+.three-ways-title {
+  font-size: var(--font-size-three-ways-title);
+  line-height: 1.2;
+}
+
+.project-video-card {
+  overflow: hidden;
+  border: var(--frame-border-width) solid var(--color-text);
+  background: var(--color-background);
+}
+
+.project-video-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--video-accent-height);
+  background: var(--color-text);
+  content: "";
+}
+
+.project-video-card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-video-first {
+  left: var(--page-gutter);
+  top: var(--video-first-top);
+  width: var(--video-first-width);
+  height: var(--video-first-height);
+}
+
+.project-video-second,
+.project-video-third {
+  border-top: var(--video-accent-height) solid var(--color-project-yellow);
+}
+
+.project-video-second {
+  left: var(--page-gutter);
+  top: var(--video-second-top);
+  width: var(--video-first-width);
+  height: var(--video-second-height);
+}
+
+.project-video-third {
+  left: var(--video-third-left);
+  top: var(--video-third-top);
+  width: var(--video-third-width);
+  height: var(--video-third-height);
 }

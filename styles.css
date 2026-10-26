@@ -2,7 +2,7 @@
 :root {
   /* צבעים */
   --color-background: #ffffff;
-  --color-text: #000000;
+  --color-text: #2100ff;
   --color-handle-fill: #d9d9d9;
   --color-handle-border: #006aa7;
 
@@ -283,4 +283,27 @@ body {
   width: 100%;
   height: 357.3%;
   max-width: none;
+}
+
+/* קישור התהליך בפינה הימנית התחתונה של הפריים */
+.process-link {
+  left: 1310px;
+  top: 795px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 43px;
+  border-radius: 999px;
+  background: var(--color-text);
+  color: var(--color-background);
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.process-link:focus-visible {
+  outline: 3px solid var(--color-handle-border);
+  outline-offset: 4px;
 }

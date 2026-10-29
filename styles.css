@@ -21,6 +21,7 @@
   /* גודל הפריים בפיגמה (העמוד מוקטן/מוגדל כדי להיכנס למסך) */
   --stage-width: 1440px;
   --stage-height: 1024px;
+  --home-lift: 24px; /* בכמה להרים את עמוד הבית למעלה (יותר מזה חותך את הידית העליונה של הדג) */
   --long-page-height: 2710px;
   --page-gutter: 64px;
   --process-preview-left: 28px;
@@ -91,25 +92,33 @@ body {
   height: 100%;
 }
 
-/* העמוד תופס מסך אחד בדיוק, בלי גלילה */
+/* העמוד תופס מסך אחד בדיוק, בלי גלילה.
+   הבמה ממורכזת לרוחב ונצמדת למעלה */
 body {
   background: var(--color-background);
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
 /* ===== הבמה: הפריים מהפיגמה בגודל המקורי =====
-   script.js מחשב את --stage-scale כך שהבמה תיכנס לכל מסך */
+   script.js מחשב את --stage-scale כך שהבמה תיכנס לכל מסך.
+   הבמה לא חותכת את מה שיוצא ממנה, כך שבמסך רחב אפשר לגרור
+   את הדג עד קצה המסך (רק קצה החלון חותך) */
 .stage {
   position: relative;
   flex: none;
   width: var(--stage-width);
   height: var(--stage-height);
   background: var(--color-background);
-  overflow: hidden;
   transform: scale(var(--stage-scale, 1));
+  transform-origin: top center;
+}
+
+/* עמוד הבית מורם קצת למעלה, כדי שהתוכן לא ישב נמוך מדי במסך */
+.home-stage {
+  transform: scale(var(--stage-scale, 1)) translateY(calc(var(--home-lift) * -1));
 }
 
 .long-page-body {
@@ -127,6 +136,7 @@ body {
 
 .process-page-stage {
   height: var(--long-page-height);
+  overflow: hidden;
   transform-origin: top left;
 }
 
@@ -188,10 +198,6 @@ body {
 
 .fish-button circle {
   fill: var(--color-text);
-}
-
-.stage.fish-moved {
-  overflow: visible;
 }
 
 /* כל חלק בבמה ממוקם במדויק לפי הפיגמה */
@@ -362,25 +368,48 @@ body {
   white-space: nowrap;
 }
 
-.headline-comi {
-  left: 350px;
-  top: 397px;
-  width: 425.539px;
-  height: 439.284px;
+/* האותיות c-o-m-i: כל אות מסובבת לפי השיפוע של האבן במקום שלה,
+   כך שהתחתית שלה (קו הבסיס) נוגעת בדיוק בקו הצד של האבן.
+   המיקומים מחושבים על קו חלק לאורך האבן, כך שהרווח בין כל שתי אותיות שווה */
+.rock-letter {
+  width: 107.25px;
+  height: 184px;
 }
 
-.headline-comi > .headline-part {
-  transform: rotate(47.26deg);
+.rock-letter-c {
+  left: 436.0px;
+  top: 384.2px;
+  transform: rotate(52.38deg);
 }
 
-.headline-ng {
-  left: 670px;
-  top: 711px;
-  width: 267.329px;
-  height: 249.383px;
+.rock-letter-o {
+  left: 498.8px;
+  top: 464.9px;
+  transform: rotate(53.71deg);
 }
 
-.headline-ng > .headline-part {
+.rock-letter-m {
+  left: 564.2px;
+  top: 559.3px;
+  transform: rotate(57.3deg);
+}
+
+.rock-letter-i {
+  left: 623.1px;
+  top: 652.1px;
+  transform: rotate(63.43deg);
+}
+
+/* האותיות n-g: במקום המקורי שלהן מהפיגמה, בירידה אל האדמה */
+.slope-letter-n {
+  left: 700.2px;
+  top: 723.9px;
+  transform: rotate(21.64deg);
+}
+
+.slope-letter-g {
+  left: 799.9px;
+  top: 763.5px;
   transform: rotate(21.64deg);
 }
 

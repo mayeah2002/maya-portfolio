@@ -6,12 +6,22 @@ const PROCESS_PAGE_HEIGHT = 2710;
 const fishInteractiveGroup = document.querySelector('.fish-interactive-group');
 const longPageShell = document.querySelector('.long-page-shell');
 
+// בכמה פיקסלים עמוד הבית מורם למעלה (נקבע ב-styles.css במשתנה --home-lift)
+function getHomeLift() {
+  return Number.parseFloat(getComputedStyle(stage).getPropertyValue('--home-lift')) || 0;
+}
+
 function fitStageToScreen() {
   const isCompactLongPage =
     longPageShell && window.matchMedia('(max-width: 600px)').matches;
+  // עמוד התהליך נמתח לכל רוחב המסך (גם במסכים רחבים מ-1440).
+  // עמוד הבית נכנס במלואו למסך; החלק העליון שהורם לא צריך להיכנס
   const scale = longPageShell
-    ? Math.min(window.innerWidth / STAGE_WIDTH, 1)
-    : Math.min(window.innerWidth / STAGE_WIDTH, window.innerHeight / STAGE_HEIGHT);
+    ? window.innerWidth / STAGE_WIDTH
+    : Math.min(
+      window.innerWidth / STAGE_WIDTH,
+      window.innerHeight / (STAGE_HEIGHT - getHomeLift()),
+    );
   stage.style.setProperty('--stage-scale', scale);
 
   if (longPageShell) {
@@ -93,6 +103,17 @@ const SLIDE_MIN_SPEED = 450; // מהירות מינימלית על האדמה, �
 const SLIDE_CONTACT_GAP = 14; // מרווח קטן בין אותיות, כדי שכל פגיעה תיראה
 const MAX_FRAME_TIME = 1 / 30;
 
+// ease-in: האנימציה מתחילה לאט והקצב שלה עולה בהדרגה כל עוד היא מתנגנת
+const SLIDE_START_PACE = 0.3; // בהתחלה הכול זז ב-30% מהמהירות
+const SLIDE_PACE_GROWTH = 0.9; // כמה מהר הקצב עולה (גדול יותר = מאיץ מהר יותר)
+const SLIDE_MAX_PACE = 3; // הקצב לא עולה מעבר לפי 3
+
+// מחזיר את הקצב לפי הזמן שעבר (בשניות): עקומה ריבועית, כמו ease-in
+function getSlidePace(elapsedTime) {
+  const pace = SLIDE_START_PACE + SLIDE_PACE_GROWTH * elapsedTime * elapsedTime;
+  return Math.min(pace, SLIDE_MAX_PACE);
+}
+
 // אותיות "כבדות" דוחפות חזק יותר
 const MASS_BY_LETTER = {
   c: 0.85,
@@ -152,27 +173,26 @@ async function playTitleExit() {
 
   const stageRect = stage.getBoundingClientRect();
   const scale = stageRect.width / STAGE_WIDTH;
-  const comingSources = [
-    ...document.querySelectorAll('.headline-comi .headline-letter'),
-    ...document.querySelectorAll('.headline-ng .headline-letter'),
-  ];
+  // האותיות של coming: כל אחת מסובבת בעצמה לפי השיפוע של האבן
+  const comingSources = [...document.querySelectorAll('.rock-letter')];
   const soonSources = [...headlineSoon.querySelectorAll('.headline-letter')];
 
   // יוצר עותק לכל אות, בדיוק במקום ובזווית של המקורית
   const letters = [
-    ...comingSources.map((source) => {
-      const word = source.closest('.headline-comi, .headline-ng');
-      const rotation = getRotationDegrees(word.querySelector('.headline-part'));
-      return createTitleParticle(source, stageRect, scale, rotation);
-    }),
+    ...comingSources.map((source) => (
+      createTitleParticle(source, stageRect, scale, getRotationDegrees(source))
+    )),
     ...soonSources.map((source) => createTitleParticle(source, stageRect, scale, 0)),
   ];
+
+  // הקצה הימני של החלון, ביחידות של הבמה (במסך רחב הוא רחוק יותר מ-1440)
+  const screenRightEdge = (window.innerWidth - stageRect.left) / scale;
 
   // המסילה ממשיכה על קו האדמה עד הרבה אחרי הקצה הימני של המסך
   const lastLetter = letters[letters.length - 1];
   const path = createSlidePath([
     ...letters.map((letter) => ({ ...letter.center, rotation: letter.rotation })),
-    { x: STAGE_WIDTH + 2000, y: lastLetter.center.y, rotation: 0 },
+    { x: screenRightEdge + 2000, y: lastLetter.center.y, rotation: 0 },
   ]);
 
   letters.forEach((letter, index) => {
@@ -193,12 +213,17 @@ async function playTitleExit() {
 
   await new Promise((resolve) => {
     let previousTime = null;
+    let elapsedTime = 0; // כמה זמן אמיתי עבר מתחילת האנימציה
 
     function step(time) {
-      const frameTime = previousTime === null
+      const realFrameTime = previousTime === null
         ? 0
         : Math.min((time - previousTime) / 1000, MAX_FRAME_TIME);
       previousTime = time;
+      elapsedTime += realFrameTime;
+
+      // זמן הסימולציה רץ לאט בהתחלה ומהר יותר ויותר (ease-in)
+      const frameTime = realFrameTime * getSlidePace(elapsedTime);
 
       // 1. כל אות שזזה מחליקה במורד לפי השיפוע, פחות החיכוך
       letters.forEach((letter) => {
@@ -233,7 +258,7 @@ async function playTitleExit() {
 
       // 4. ממשיכים עד שגם האות האחרונה יצאה מהמסך
       const isEveryLetterGone = letters.every((letter) => (
-        getPointOnPath(path, letter.distance).x - letter.width > STAGE_WIDTH
+        getPointOnPath(path, letter.distance).x - letter.width > screenRightEdge
       ));
 
       if (isEveryLetterGone) resolve();
@@ -375,7 +400,6 @@ if (fishInteractiveGroup) {
 
   function setOffset(axis, value) {
     fishInteractiveGroup.style.setProperty(`--fish-offset-${axis}`, `${value}px`);
-    stage.classList.add('fish-moved');
   }
 
   let moveStart = null;

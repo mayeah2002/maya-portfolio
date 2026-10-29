@@ -8,7 +8,7 @@
 </head>
 <body>
   <!-- הבמה: עמוד "בקרוב" לפי הפריים בפיגמה -->
-  <main class="stage">
+  <main class="stage home-stage">
 
     <!-- היצור קבוע מאחורי האבן, והמשבצות נשארות כרקע -->
     <div class="rock-scene">
@@ -37,10 +37,15 @@
       <img class="rock" src="images/rock-cutout.png" alt="אבן">
     </div>
 
-    <!-- הכיתוב נשאר בסידור המקורי ומעט קרוב יותר לאבן -->
+    <!-- הכיתוב: האותיות c-o-m-i יושבות אחת-אחת על קו הצד של האבן -->
     <h1 class="headline" aria-label="coming soon">
-      <span class="rotated-box headline-comi" aria-hidden="true"><span class="headline-part"><span class="headline-letter">c</span><span class="headline-letter">o</span><span class="headline-letter">m</span><span class="headline-letter">i</span></span></span>
-      <span class="rotated-box headline-ng" aria-hidden="true"><span class="headline-part"><span class="headline-letter">n</span><span class="headline-letter">g</span></span></span>
+      <span class="headline-part headline-letter rock-letter rock-letter-c" aria-hidden="true">c</span>
+      <span class="headline-part headline-letter rock-letter rock-letter-o" aria-hidden="true">o</span>
+      <span class="headline-part headline-letter rock-letter rock-letter-m" aria-hidden="true">m</span>
+      <span class="headline-part headline-letter rock-letter rock-letter-i" aria-hidden="true">i</span>
+      <!-- n-g ממשיכות מהפינה של האבן בירידה אל האדמה -->
+      <span class="headline-part headline-letter rock-letter slope-letter-n" aria-hidden="true">n</span>
+      <span class="headline-part headline-letter rock-letter slope-letter-g" aria-hidden="true">g</span>
       <span class="headline-part headline-soon" aria-hidden="true"><span class="headline-letter">s</span><span class="headline-letter">o</span><span class="headline-letter">o</span><span class="headline-letter">n</span></span>
     </h1>
 

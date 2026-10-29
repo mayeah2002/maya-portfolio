@@ -11,47 +11,65 @@
   --font-display: "80-kb Grunge", monospace;
   --font-hebrew: "80-kb Grunge", Arial, sans-serif;
   --font-size-display: 198.508px;
-  --font-size-process-title: 155px;
-  --font-size-process-label: 58px;
-  --font-size-three-ways-label: 64px;
-  --font-size-three-ways-title: 185px;
+  --font-label: "Narkiss Hadash", Arial, sans-serif;
+  --font-size-page-title: 185.3px;
+  --line-height-page-title: 0.73;
+  --font-size-page-label: 50px;
+  --line-height-page-label: 0.75;
   --font-size-arrow: 30px;
 
   /* גודל הפריים בפיגמה (העמוד מוקטן/מוגדל כדי להיכנס למסך) */
   --stage-width: 1440px;
   --stage-height: 1024px;
+  --long-page-height: 2710px;
   --page-gutter: 64px;
+  --process-preview-left: 28px;
+  --process-video-left: 26px;
+  --home-link-top: 30px;
+  --home-link-width: 56px;
+  --home-link-height: 42px;
+  --fish-button-left: 126px;
+  --process-navigation-top: 48px;
+  --process-navigation-width: 76px;
+  --process-navigation-height: 58px;
+  --process-navigation-shadow: 0 2px 6px rgba(0, 0, 0, 0.32);
   --frame-border-width: 5px;
-  --video-accent-height: 14px;
-  --page-title-rotation: 9deg;
-  --process-preview-top: 250px;
-  --process-preview-width: 560px;
-  --process-preview-height: 394px;
-  --process-copy-left: 620px;
-  --process-copy-top: 105px;
-  --process-copy-width: 760px;
-  --process-copy-height: 780px;
-  --next-page-top: 890px;
-  --navigation-width: 92px;
-  --navigation-height: 44px;
-  --three-ways-copy-left: 740px;
-  --three-ways-copy-top: 35px;
-  --three-ways-copy-width: 650px;
-  --three-ways-copy-height: 485px;
-  --video-first-top: 60px;
-  --video-first-width: 650px;
-  --video-first-height: 370px;
-  --video-second-top: 475px;
-  --video-second-height: 445px;
-  --video-third-left: 790px;
-  --video-third-top: 565px;
-  --video-third-width: 590px;
-  --video-third-height: 370px;
+  --video-accent-height: 8px;
+  --process-preview-top: 277px;
+  --process-preview-width: 728px;
+  --process-preview-height: 522px;
+  /* מיקום הטקסטים בעמוד התהליך (לפי הפיגמה) */
+  --page-copy-left: 763px;
+  --page-copy-width: 659px;
+  --page-label-inset: 7px;
+  --page-title-gap: 41px;
+  --process-copy-top: 234px;
+  --three-ways-copy-top: 994px;
+  --video-first-top: 22px;
+  --video-first-width: 665px;
+  --video-first-height: 410px;
+  --video-second-top: 482px;
+  --video-second-height: 410px;
+  --video-third-left: 746px;
+  --video-third-top: 482px;
+  --video-third-width: 665px;
+  --video-third-height: 410px;
 
   /* ריבועי הבחירה סביב הדג */
   --handle-size: 22px;
   --handle-border: 5px;
   --handle-rotation: -18.91deg;
+  --rock-checker-size: 32px;
+  --color-checker-light: #ffffff;
+  --color-checker-dark: #e6e6e6;
+  --transition-hover-duration: 160ms;
+  --cursor-rotate: url("images/cursor-rotate.svg") 12 12, alias;
+  --process-hover-brightness: 0.78;
+  --mobile-page-padding: 20px;
+  --mobile-block-gap: 24px;
+  --mobile-section-gap: 48px;
+  --mobile-title-size: clamp(52px, 14vw, 84px);
+  --mobile-label-size: clamp(24px, 6vw, 32px);
 }
 
 /* טעינת הפונט מתוך תיקיית fonts */
@@ -94,9 +112,190 @@ body {
   transform: scale(var(--stage-scale, 1));
 }
 
+.long-page-body {
+  display: block;
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.long-page-shell {
+  position: relative;
+  margin: 0 auto;
+}
+
+.process-page-stage {
+  height: var(--long-page-height);
+  transform-origin: top left;
+}
+
+.long-page-shell > .process-page-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.home-link {
+  top: var(--process-navigation-top);
+  left: var(--process-preview-left);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--process-navigation-width);
+  height: var(--process-navigation-height);
+  border-radius: 999px;
+  background: var(--color-text);
+  box-shadow: var(--process-navigation-shadow);
+  transition: filter var(--transition-hover-duration) ease;
+}
+
+.home-link:hover {
+  filter: brightness(var(--process-hover-brightness));
+}
+
+.home-link:focus-visible {
+  outline: 3px solid var(--color-handle-border);
+  outline-offset: 4px;
+}
+
+.home-link svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--color-background);
+}
+
+.fish-button {
+  top: var(--process-navigation-top);
+  left: var(--fish-button-left);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--process-navigation-width);
+  height: var(--process-navigation-height);
+  border-radius: 999px;
+  background: var(--color-text);
+  box-shadow: var(--process-navigation-shadow);
+}
+
+.fish-button svg {
+  width: 46px;
+  height: 30px;
+  fill: var(--color-background);
+}
+
+.fish-button circle {
+  fill: var(--color-text);
+}
+
+.stage.fish-moved {
+  overflow: visible;
+}
+
 /* כל חלק בבמה ממוקם במדויק לפי הפיגמה */
 .stage > * {
   position: absolute;
+}
+
+.fish-interactive-group {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translate(var(--fish-offset-x, 0px), var(--fish-offset-y, 0px))
+    rotate(var(--fish-rotation, 0deg))
+    scale(var(--fish-scale-x, 1), var(--fish-scale-y, 1));
+  transform-origin: 1060px 295px;
+}
+
+.fish-interactive-group > * {
+  position: absolute;
+}
+
+.selection-frame-box,
+.handle-box,
+.handle-dot-box {
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.fish-box {
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.fish-box,
+.selection-frame-box {
+  cursor: grab;
+  touch-action: none;
+}
+
+.fish-box:active,
+.selection-frame-box:active {
+  cursor: grabbing;
+}
+
+.fish-interactive-group .selection-art {
+  position: absolute;
+  top: 0;
+  right: -8.61%;
+  bottom: -1.89%;
+  left: -10.4%;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  cursor: default;
+  touch-action: none;
+  user-select: none;
+}
+
+/* סמן מתיחה לכל הידיות (גם אלה שבתוך ה-SVG וגם הכפתורים) */
+.fish-interactive-group [data-resize-handle] {
+  cursor: nwse-resize;
+}
+
+.fish-interactive-group .resize-handle {
+  pointer-events: all;
+}
+
+.fish-interactive-group [data-resize-handle="top-right"],
+.fish-interactive-group [data-resize-handle="bottom-left"] {
+  cursor: nesw-resize;
+}
+
+.fish-interactive-group [data-resize-handle="left-middle"],
+.fish-interactive-group [data-resize-handle="right-middle"] {
+  cursor: ew-resize;
+}
+
+.fish-interactive-group .resize-handle:focus-visible {
+  filter: drop-shadow(0 0 2px var(--color-text));
+}
+
+/* ידית הסיבוב מקבלת סמן של חץ מסתובב */
+.fish-interactive-group .rotation-handle {
+  cursor: var(--cursor-rotate);
+  pointer-events: all;
+  touch-action: none;
+}
+
+.fish-interactive-group .rotation-handle:focus-visible {
+  filter: drop-shadow(0 0 2px var(--color-text));
+}
+
+.fish-interactive-group .handle-box {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  touch-action: none;
+}
+
+.fish-interactive-group .handle-dot-box {
+  border: 0;
+  padding: 0;
+  background: transparent;
 }
 
 /* עוטפן שמרכז אלמנט מסובב בתוך התיבה שלו */
@@ -111,12 +310,37 @@ body {
 }
 
 /* ===== הסלע ===== */
-.rock {
+.rock-scene {
   left: -36px;
   top: 361px;
   width: 740px;
   height: 740px;
+  isolation: isolate;
+}
+
+.rock-scene::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: conic-gradient(
+    var(--color-checker-dark) 25%,
+    var(--color-checker-light) 0 50%,
+    var(--color-checker-dark) 0 75%,
+    var(--color-checker-light) 0
+  );
+  background-size: var(--rock-checker-size) var(--rock-checker-size);
+  pointer-events: none;
+}
+
+.rock {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  pointer-events: none;
 }
 
 /* ===== הכיתוב "coming soon" ===== */
@@ -139,25 +363,29 @@ body {
 }
 
 .headline-comi {
-  left: 391px;
+  left: 350px;
   top: 397px;
   width: 425.539px;
   height: 439.284px;
 }
 
-.headline-comi > span {
+.headline-comi > .headline-part {
   transform: rotate(47.26deg);
 }
 
 .headline-ng {
-  left: 704px;
+  left: 670px;
   top: 711px;
   width: 267.329px;
   height: 249.383px;
 }
 
-.headline-ng > span {
+.headline-ng > .headline-part {
   transform: rotate(21.64deg);
+}
+
+.headline-letter {
+  display: inline-block;
 }
 
 .headline-soon {
@@ -166,12 +394,48 @@ body {
   width: 433.76px;
 }
 
-/* ===== החייזר על הסלע ===== */
+.stage.is-leaving .headline-letter {
+  visibility: hidden;
+}
+
+.title-animation-letter {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* ===== החייזר נשאר קבוע ומציץ מאחורי האבן ===== */
 .alien-box {
-  left: 28.75px;
-  top: 457.65px;
+  position: absolute;
+  left: 130px;
+  top: 54px;
   width: 175.076px;
   height: 165.237px;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  clip-path: polygon(0 50%, 67% 0, 100% 50%, 33% 100%);
+}
+
+.alien-box:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 4px;
+}
+
+.alien-box-content {
+  width: 100%;
+  height: 100%;
+  transform-origin: center bottom;
 }
 
 .alien {
@@ -244,18 +508,6 @@ body {
   transform: rotate(var(--handle-rotation));
 }
 
-.selection-frame img {
-  position: absolute;
-  top: 0;
-  right: -8.61%;
-  bottom: -1.89%;
-  left: -10.4%;
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: none;
-}
-
 /* ריבועים ונקודה שנמצאים מחוץ למסגרת */
 .handle-box {
   width: 27.942px;
@@ -281,10 +533,15 @@ body {
 }
 
 .handle-dot-box {
+  z-index: 3;
   left: 1336.42px;
   top: 179.52px;
   width: 29.274px;
   height: 29.274px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  touch-action: none;
 }
 
 .handle-dot {
@@ -335,16 +592,22 @@ body {
   font-size: 18px;
   font-weight: bold;
   text-decoration: none;
+  transition: filter var(--transition-hover-duration) ease;
+}
+
+.process-link:hover {
+  filter: brightness(var(--process-hover-brightness));
 }
 
 .process-link:focus-visible {
   outline: 3px solid var(--color-handle-border);
   outline-offset: 4px;
+  filter: brightness(var(--process-hover-brightness));
 }
 
 /* עמוד התהליך */
 .process-preview {
-  left: var(--page-gutter);
+  left: var(--process-preview-left);
   top: var(--process-preview-top);
   width: var(--process-preview-width);
   height: var(--process-preview-height);
@@ -358,96 +621,53 @@ body {
   object-fit: cover;
 }
 
-.process-copy {
-  left: var(--process-copy-left);
-  top: var(--process-copy-top);
-  width: var(--process-copy-width);
-  height: var(--process-copy-height);
+/* טקסטים של העמוד: תווית [חלק] וכותרת גדולה, מיושרים לימין כמו בפיגמה */
+.process-copy,
+.three-ways-copy {
+  left: var(--page-copy-left);
+  width: var(--page-copy-width);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
   color: var(--color-text);
-  transform: rotate(var(--page-title-rotation));
+  text-align: right;
 }
 
+.process-copy {
+  top: var(--process-copy-top);
+}
+
+.three-ways-copy {
+  top: var(--three-ways-copy-top);
+}
+
+/* התווית הקטנה [חלק 1] / [חלק 2] */
 .process-label,
 .three-ways-label {
-  font-family: var(--font-hebrew);
-  font-size: var(--font-size-process-label);
+  margin-right: var(--page-label-inset);
+  font-family: var(--font-label);
+  font-size: var(--font-size-page-label);
+  line-height: var(--line-height-page-label);
+  white-space: nowrap;
 }
 
+/* הכותרת הגדולה, כל מילה בשורה משלה */
 .process-title,
 .three-ways-title {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-top: var(--page-title-gap);
   font-family: var(--font-hebrew);
-  font-size: var(--font-size-process-title);
+  font-size: var(--font-size-page-title);
   font-weight: normal;
-  line-height: 1.12;
-}
-
-.next-page-link {
-  left: var(--page-gutter);
-  top: var(--next-page-top);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--navigation-width);
-  height: var(--navigation-height);
-  border-radius: 999px;
-  background: var(--color-text);
-  color: var(--color-background);
-  font-family: Arial, sans-serif;
-  font-size: var(--font-size-arrow);
-  line-height: 1;
-  text-decoration: none;
-}
-
-.next-page-link:focus-visible,
-.process-preview:focus-visible {
-  outline: 3px solid var(--color-handle-border);
-  outline-offset: 5px;
-}
-
-/* עמוד שלוש הדרכים */
-.three-ways-copy {
-  left: var(--three-ways-copy-left);
-  top: var(--three-ways-copy-top);
-  width: var(--three-ways-copy-width);
-  height: var(--three-ways-copy-height);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text);
-  transform: rotate(var(--page-title-rotation));
-}
-
-.three-ways-label {
-  font-size: var(--font-size-three-ways-label);
-}
-
-.three-ways-title {
-  font-size: var(--font-size-three-ways-title);
-  line-height: 1.2;
+  line-height: var(--line-height-page-title);
 }
 
 .project-video-card {
+  margin: 0;
   overflow: hidden;
   border: var(--frame-border-width) solid var(--color-text);
   background: var(--color-background);
-}
-
-.project-video-card::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: var(--video-accent-height);
-  background: var(--color-text);
-  content: "";
 }
 
 .project-video-card video {
@@ -458,22 +678,25 @@ body {
 }
 
 .project-video-first {
-  left: var(--page-gutter);
+  left: var(--process-video-left);
   top: var(--video-first-top);
   width: var(--video-first-width);
   height: var(--video-first-height);
 }
 
-.project-video-second,
-.project-video-third {
-  border-top: var(--video-accent-height) solid var(--color-project-yellow);
+.process-page-stage .project-video-first {
+  top: calc(var(--stage-height) + var(--video-first-top));
 }
 
 .project-video-second {
-  left: var(--page-gutter);
+  left: var(--process-video-left);
   top: var(--video-second-top);
   width: var(--video-first-width);
   height: var(--video-second-height);
+}
+
+.process-page-stage .project-video-second {
+  top: calc(var(--stage-height) + var(--video-second-top));
 }
 
 .project-video-third {
@@ -481,4 +704,128 @@ body {
   top: var(--video-third-top);
   width: var(--video-third-width);
   height: var(--video-third-height);
+}
+
+.process-page-stage .project-video-third {
+  top: calc(var(--stage-height) + var(--video-third-top));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-link,
+  .home-link {
+    transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .long-page-shell {
+    width: 100%;
+    height: auto;
+  }
+
+  .long-page-shell > .process-page-stage {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+  .process-page-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--mobile-block-gap);
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    padding: var(--mobile-page-padding);
+    overflow: visible;
+    transform: none;
+  }
+
+  .process-page-stage > * {
+    position: static;
+    flex: none;
+  }
+
+  .process-page-stage > .home-link {
+    position: absolute;
+    top: var(--mobile-page-padding);
+    left: var(--mobile-page-padding);
+  }
+
+  .process-page-stage > .fish-button {
+    position: absolute;
+    top: var(--mobile-page-padding);
+    left: calc(var(--mobile-page-padding) + 72px);
+  }
+
+  .process-page-stage .process-preview {
+    width: 100%;
+    height: auto;
+    margin-top: 56px;
+    aspect-ratio: 720 / 516;
+  }
+
+  .process-page-stage .home-link,
+  .process-page-stage .fish-button {
+    width: 56px;
+    height: 42px;
+  }
+
+  .process-page-stage .home-link svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .process-page-stage .fish-button svg {
+    width: 36px;
+    height: 24px;
+  }
+
+  .process-page-stage .process-copy,
+  .process-page-stage .three-ways-copy {
+    width: 100%;
+    height: auto;
+    align-items: stretch;
+    justify-content: flex-start;
+    transform: none;
+    text-align: right;
+  }
+
+  .process-page-stage .process-title,
+  .process-page-stage .three-ways-title {
+    align-items: stretch;
+    text-align: right;
+  }
+
+  .process-page-stage .three-ways-copy {
+    margin-top: var(--mobile-section-gap);
+  }
+
+  .process-page-stage .process-label,
+  .process-page-stage .three-ways-label {
+    font-size: var(--mobile-label-size);
+  }
+
+  .process-page-stage .process-title,
+  .process-page-stage .three-ways-title {
+    font-size: var(--mobile-title-size);
+    line-height: 1.1;
+  }
+
+  .process-page-stage .project-video-first,
+  .process-page-stage .project-video-second,
+  .process-page-stage .project-video-third {
+    width: 100%;
+    height: auto;
+  }
+
+  .process-page-stage .project-video-first,
+  .process-page-stage .project-video-second {
+    aspect-ratio: 665 / 410;
+  }
+
+  .process-page-stage .project-video-third {
+    aspect-ratio: 665 / 410;
+  }
 }

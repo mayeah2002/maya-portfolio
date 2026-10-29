@@ -3,29 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>העלנו עמוד בקרוב | מאיה כהן</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>תהליך | מאיה כהן</title>
+  <link rel="stylesheet" href="styles.css?v=20261029-text-align">
 </head>
-<body>
-  <main class="stage process-stage">
-    <a class="process-preview" href="index.html" aria-label="חזרה לעמוד בקרוב">
-      <img src="images/coming-soon-preview.png" alt="תצוגה מקדימה של עמוד בקרוב">
-    </a>
+<body class="long-page-body">
+  <div class="long-page-shell">
+    <main class="stage process-page-stage">
+      <a class="home-link" href="index.html" aria-label="חזרה לעמוד הבית">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5v10a.5.5 0 0 1-.5.5h-6v-6h-5v6h-6a.5.5 0 0 1-.5-.5z" />
+        </svg>
+      </a>
+      <span class="fish-button" aria-hidden="true">
+        <svg viewBox="0 0 32 20">
+          <path d="M3 10c3.3-4.1 8.1-6.2 13.8-6.2 4 0 7.5 1.3 10 3.8L30 4.5v11l-3.2-3.1c-2.5 2.5-6 3.8-10 3.8C11.1 16.2 6.3 14.1 3 10Z" />
+          <circle cx="11" cy="8.2" r="1.1" />
+        </svg>
+      </span>
 
-    <section class="process-copy" dir="rtl">
-      <p class="process-label">חלק 1:</p>
-      <h1 class="process-title">
-        <span>העלנו</span>
-        <span>עמוד</span>
-        <span>בקרוב</span>
-      </h1>
-    </section>
+      <figure class="process-preview">
+        <img src="images/coming-soon-preview.png" alt="תצוגה מקדימה של עמוד בקרוב">
+      </figure>
 
-    <a class="next-page-link" href="three-ways.html" aria-label="המשך לעמוד שלוש דרכים">
-      <span aria-hidden="true">←</span>
-    </a>
-  </main>
+      <section class="process-copy" dir="rtl">
+        <p class="process-label">[חלק 1]</p>
+        <h1 class="process-title">
+          <span>העלנו</span>
+          <span>עמוד</span>
+          <span>בקרוב</span>
+        </h1>
+      </section>
 
-  <script src="script.js"></script>
+      <section class="three-ways-copy" dir="rtl">
+        <p class="three-ways-label">[חלק 2]</p>
+        <h2 class="three-ways-title">
+          <span>שלוש</span>
+          <span>דרכים</span>
+          <span>שונות</span>
+        </h2>
+      </section>
+
+      <figure class="project-video-card project-video-first">
+        <video autoplay muted loop preload="metadata" playsinline aria-label="סרטון הפרויקט הראשון">
+          <source src="images/three-ways-3.mp4" type="video/mp4">
+          הדפדפן שלך אינו תומך בהפעלת סרטונים.
+        </video>
+      </figure>
+
+      <figure class="project-video-card project-video-second">
+        <video autoplay muted loop preload="metadata" playsinline aria-label="סרטון הפרויקט השני">
+          <source src="images/three-ways-2.mp4" type="video/mp4">
+          הדפדפן שלך אינו תומך בהפעלת סרטונים.
+        </video>
+      </figure>
+
+      <figure class="project-video-card project-video-third">
+        <video autoplay muted loop preload="metadata" playsinline aria-label="סרטון הפרויקט השלישי">
+          <source src="images/three-ways-1.mp4" type="video/mp4">
+          הדפדפן שלך אינו תומך בהפעלת סרטונים.
+        </video>
+      </figure>
+    </main>
+  </div>
+
+  <script src="script.js?v=20261029-layout"></script>
 </body>
 </html>

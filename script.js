@@ -14,10 +14,11 @@ function getHomeLift() {
 function fitStageToScreen() {
   const isCompactLongPage =
     longPageShell && window.matchMedia('(max-width: 600px)').matches;
-  // עמוד התהליך נמתח לכל רוחב המסך (גם במסכים רחבים מ-1440).
+  // עמוד התהליך מוקטן במסכים צרים, אבל לא גדל מעבר לגודל המקורי (1440)
+  // ובמסכים רחבים הוא נשאר באמצע.
   // עמוד הבית נכנס במלואו למסך; החלק העליון שהורם לא צריך להיכנס
   const scale = longPageShell
-    ? window.innerWidth / STAGE_WIDTH
+    ? Math.min(window.innerWidth / STAGE_WIDTH, 1)
     : Math.min(
       window.innerWidth / STAGE_WIDTH,
       window.innerHeight / (STAGE_HEIGHT - getHomeLift()),

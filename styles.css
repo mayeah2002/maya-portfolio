@@ -21,7 +21,7 @@
   /* גודל הפריים בפיגמה (העמוד מוקטן/מוגדל כדי להיכנס למסך) */
   --stage-width: 1440px;
   --stage-height: 1024px;
-  --home-lift: 24px; /* בכמה להרים את עמוד הבית למעלה (יותר מזה חותך את הידית העליונה של הדג) */
+  --home-lift: 12px; /* בכמה להרים את עמוד הבית למעלה (פחות = יותר רווח לבן מעל המסגרת של הדג) */
   --long-page-height: 2710px;
   --page-gutter: 64px;
   --process-preview-left: 28px;
@@ -60,6 +60,15 @@
   --handle-size: 22px;
   --handle-border: 5px;
   --handle-rotation: -18.91deg;
+  --handle-dot-size: 23.05px;
+  --color-handle-dot-fill: #e0e0e0;
+  /* מסגרת הבחירה (המידות של הקו עצמו, לפני מתיחה) */
+  --selection-width: 569.456px;
+  --selection-height: 322px;
+  --selection-center-x: 296px; /* מרכז המסגרת בתוך .selection-frame */
+  --selection-center-y: 172px;
+  --selection-center-on-stage: 1080.76px 282.07px; /* אותה נקודה, ביחידות של הבמה */
+  --rotation-arm-length: 55.6px;
   --rock-checker-size: 32px;
   --color-checker-light: #ffffff;
   --color-checker-dark: #e6e6e6;
@@ -210,19 +219,35 @@ body {
   inset: 0;
   pointer-events: none;
   transform: translate(var(--fish-offset-x, 0px), var(--fish-offset-y, 0px))
-    rotate(var(--fish-rotation, 0deg))
-    scale(var(--fish-scale-x, 1), var(--fish-scale-y, 1));
+    rotate(var(--fish-rotation, 0deg));
   transform-origin: 1060px 295px;
+}
+
+/* הדג נמתח לאורך הצירים של המסגרת (שמוטה ב-18.91 מעלות),
+   מסביב למרכז של המסגרת, כדי שיתאים בדיוק למסגרת שנמתחת */
+.fish-stretch {
+  inset: 0;
+  transform: rotate(var(--handle-rotation))
+    scale(var(--fish-scale-x, 1), var(--fish-scale-y, 1))
+    rotate(calc(var(--handle-rotation) * -1));
+  transform-origin: var(--selection-center-on-stage);
+}
+
+.fish-stretch > * {
+  position: absolute;
 }
 
 .fish-interactive-group > * {
   position: absolute;
 }
 
-.selection-frame-box,
-.handle-box,
-.handle-dot-box {
+.selection-frame-box {
   z-index: 2;
+}
+
+/* רק הקו של המסגרת (והשטח שבתוכה) והידיות מגיבים לעכבר */
+.selection-outline,
+.frame-handle {
   pointer-events: auto;
 }
 
@@ -232,38 +257,19 @@ body {
 }
 
 .fish-box,
-.selection-frame-box {
+.selection-outline {
   cursor: grab;
   touch-action: none;
 }
 
 .fish-box:active,
-.selection-frame-box:active {
+.selection-outline:active {
   cursor: grabbing;
 }
 
-.fish-interactive-group .selection-art {
-  position: absolute;
-  top: 0;
-  right: -8.61%;
-  bottom: -1.89%;
-  left: -10.4%;
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: none;
-  cursor: default;
-  touch-action: none;
-  user-select: none;
-}
-
-/* סמן מתיחה לכל הידיות (גם אלה שבתוך ה-SVG וגם הכפתורים) */
+/* סמן מתיחה לכל הידיות */
 .fish-interactive-group [data-resize-handle] {
   cursor: nwse-resize;
-}
-
-.fish-interactive-group .resize-handle {
-  pointer-events: all;
 }
 
 .fish-interactive-group [data-resize-handle="top-right"],
@@ -276,32 +282,13 @@ body {
   cursor: ew-resize;
 }
 
-.fish-interactive-group .resize-handle:focus-visible {
-  filter: drop-shadow(0 0 2px var(--color-text));
-}
-
 /* ידית הסיבוב מקבלת סמן של חץ מסתובב */
 .fish-interactive-group .rotation-handle {
   cursor: var(--cursor-rotate);
-  pointer-events: all;
-  touch-action: none;
 }
 
-.fish-interactive-group .rotation-handle:focus-visible {
+.frame-handle:focus-visible {
   filter: drop-shadow(0 0 2px var(--color-text));
-}
-
-.fish-interactive-group .handle-box {
-  border: 0;
-  padding: 0;
-  background: transparent;
-  touch-action: none;
-}
-
-.fish-interactive-group .handle-dot-box {
-  border: 0;
-  padding: 0;
-  background: transparent;
 }
 
 /* עוטפן שמרכז אלמנט מסובב בתוך התיבה שלו */
@@ -537,47 +524,65 @@ body {
   transform: rotate(var(--handle-rotation));
 }
 
-/* ריבועים ונקודה שנמצאים מחוץ למסגרת */
-.handle-box {
-  width: 27.942px;
-  height: 27.942px;
+/* הקו של המסגרת. הרוחב והגובה מוכפלים במתיחה (script.js),
+   והקו מצויר עם outline כדי שהעובי שלו לא ישתנה */
+.selection-outline {
+  position: absolute;
+  left: var(--selection-center-x);
+  top: var(--selection-center-y);
+  width: calc(var(--selection-width) * var(--fish-scale-x, 1));
+  height: calc(var(--selection-height) * var(--fish-scale-y, 1));
+  outline: var(--handle-border) solid var(--color-handle-border);
+  outline-offset: calc(var(--handle-border) / -2); /* הקו יושב בדיוק על קצה המסגרת */
+  transform: translate(-50%, -50%);
 }
 
-.handle-square {
-  width: var(--handle-size);
-  height: var(--handle-size);
-  background: var(--color-handle-fill);
-  border: var(--handle-border) solid var(--color-handle-border);
-  transform: rotate(var(--handle-rotation));
-}
-
-.handle-top {
-  left: 1285.06px;
-  top: 26px;
-}
-
-.handle-bottom {
-  left: 1389.4px;
-  top: 330.63px;
-}
-
-.handle-dot-box {
-  z-index: 3;
-  left: 1336.42px;
-  top: 179.52px;
-  width: 29.274px;
-  height: 29.274px;
-  border: 0;
+/* כל ידית ממורכזת על הנקודה שלה במסגרת, ונשארת באותו גודל */
+.frame-handle {
+  position: absolute;
+  z-index: 1;
   padding: 0;
-  background: transparent;
+  border: var(--handle-border) solid var(--color-handle-border);
+  transform: translate(-50%, -50%);
   touch-action: none;
 }
 
-.handle-dot {
-  display: block;
-  width: 23.049px;
-  height: 23.049px;
-  transform: rotate(var(--handle-rotation));
+.square-handle {
+  width: calc(var(--handle-size) + var(--handle-border));
+  height: calc(var(--handle-size) + var(--handle-border));
+  background: var(--color-handle-fill);
+}
+
+.dot-handle,
+.rotation-handle {
+  width: var(--handle-dot-size);
+  height: var(--handle-dot-size);
+  border-radius: 50%;
+  background: var(--color-handle-dot-fill);
+}
+
+/* המיקום של כל ידית על המסגרת */
+[data-resize-handle="top-left"] { left: 0; top: 0; }
+[data-resize-handle="bottom-left"] { left: 0; top: 100%; }
+[data-resize-handle="top-right"] { left: 100%; top: 0; }
+[data-resize-handle="bottom-right"] { left: 100%; top: 100%; }
+[data-resize-handle="left-middle"] { left: 0; top: 50%; }
+[data-resize-handle="right-middle"] { left: 100%; top: 50%; }
+
+/* ידית הסיבוב יושבת משמאל למסגרת, מחוברת אליה בקו */
+.rotation-handle {
+  left: calc(var(--rotation-arm-length) * -1);
+  top: 50%;
+}
+
+.rotation-arm {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: var(--rotation-arm-length);
+  height: var(--handle-border);
+  background: var(--color-handle-border);
+  transform: translateY(-50%);
 }
 
 /* ===== הדג ===== */

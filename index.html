@@ -50,33 +50,30 @@
     </h1>
 
     <div class="fish-interactive-group">
-      <!-- מסגרת הבחירה והדג נמתחים יחד כשגוררים את נקודות המסגרת -->
+      <!-- מסגרת הבחירה: הרוחב והגובה שלה גדלים כשמותחים,
+           אבל עובי הקו והידיות נשארים באותו גודל -->
       <div class="rotated-box selection-frame-box">
         <div class="selection-frame">
-          <svg class="selection-art" width="639.078" height="350.492" viewBox="0 0 639.078 350.492" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="מסגרת בחירה שאפשר למתוח">
-            <rect x="67.1224" y="11" width="569.456" height="322" stroke="#006AA7" stroke-width="5"/>
-            <rect class="resize-handle" data-resize-handle="top-left" role="button" tabindex="0" aria-label="מתיחת הפינה השמאלית העליונה" x="55.5701" y="3.99222" width="22" height="22" fill="#D9D9D9" stroke="#006AA7" stroke-width="5"/>
-            <rect class="resize-handle" data-resize-handle="bottom-left" role="button" tabindex="0" aria-label="מתיחת הפינה השמאלית התחתונה" x="55.5701" y="325.992" width="22" height="22" fill="#D9D9D9" stroke="#006AA7" stroke-width="5"/>
-            <path d="M3.57009 174.492H60.5701" stroke="#006AA7" stroke-width="5"/>
-            <path class="resize-handle" data-resize-handle="left-middle" role="button" tabindex="0" aria-label="מתיחת הצד השמאלי" d="M75.5944 175.992C75.5944 180.976 71.5541 185.017 66.5701 185.017C61.5861 185.017 57.5457 180.976 57.5457 175.992C57.5457 171.008 61.5861 166.968 66.5701 166.968C71.5541 166.968 75.5944 171.008 75.5944 175.992Z" fill="#E0E0E0" stroke="#006AA7" stroke-width="5"/>
-            <path class="rotation-handle" data-rotate-handle role="button" tabindex="0" aria-label="סיבוב הדג והמסגרת" d="M20.5487 174.787C20.5487 179.771 16.5083 183.811 11.5243 183.811C6.54033 183.811 2.5 179.771 2.5 174.787C2.5 169.803 6.54033 165.762 11.5243 165.762C16.5083 165.762 20.5487 169.803 20.5487 174.787Z" fill="#E0E0E0" stroke="#006AA7" stroke-width="5"/>
-          </svg>
+          <div class="selection-outline">
+            <!-- הקו שמחבר את ידית הסיבוב למסגרת -->
+            <span class="rotation-arm" aria-hidden="true"></span>
+            <button class="frame-handle rotation-handle" type="button" data-rotate-handle aria-label="סיבוב הדג והמסגרת" title="סיבוב הדג והמסגרת"></button>
+            <button class="frame-handle square-handle" type="button" data-resize-handle="top-left" aria-label="מתיחת הפינה השמאלית העליונה" title="מתיחת הפינה השמאלית העליונה"></button>
+            <button class="frame-handle square-handle" type="button" data-resize-handle="bottom-left" aria-label="מתיחת הפינה השמאלית התחתונה" title="מתיחת הפינה השמאלית התחתונה"></button>
+            <button class="frame-handle square-handle" type="button" data-resize-handle="top-right" aria-label="מתיחת הפינה הימנית העליונה" title="מתיחת הפינה הימנית העליונה"></button>
+            <button class="frame-handle square-handle" type="button" data-resize-handle="bottom-right" aria-label="מתיחת הפינה הימנית התחתונה" title="מתיחת הפינה הימנית התחתונה"></button>
+            <button class="frame-handle dot-handle" type="button" data-resize-handle="left-middle" aria-label="מתיחת הצד השמאלי" title="מתיחת הצד השמאלי"></button>
+            <button class="frame-handle dot-handle" type="button" data-resize-handle="right-middle" aria-label="מתיחת הצד הימני" title="מתיחת הצד הימני"></button>
+          </div>
         </div>
       </div>
-      <button class="rotated-box handle-box handle-top" type="button" data-resize-handle="top-right" aria-label="מתיחת הפינה הימנית העליונה" title="מתיחת הפינה הימנית העליונה">
-        <span class="handle-square"></span>
-      </button>
-      <button class="rotated-box handle-box handle-bottom" type="button" data-resize-handle="bottom-right" aria-label="מתיחת הפינה הימנית התחתונה" title="מתיחת הפינה הימנית התחתונה">
-        <span class="handle-square"></span>
-      </button>
-      <button class="rotated-box handle-dot-box" type="button" data-resize-handle="right-middle" aria-label="מתיחת הצד הימני" title="מתיחת הצד הימני">
-        <img class="handle-dot" src="images/selection-dot.svg" width="23.049" height="23.049" alt="">
-      </button>
 
       <!-- הדג נמתח יחד עם המסגרת, בלי לשמור על היחס בין רוחב לגובה -->
-      <div class="rotated-box fish-box">
-        <div class="fish">
-          <img src="images/fish.png" alt="">
+      <div class="fish-stretch">
+        <div class="rotated-box fish-box">
+          <div class="fish">
+            <img src="images/fish.png" alt="">
+          </div>
         </div>
       </div>
     </div>

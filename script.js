@@ -408,7 +408,7 @@ if (fishInteractiveGroup) {
   fishInteractiveGroup.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return;
     if (!event.target.closest('.fish-box, .selection-frame-box')) return;
-    if (event.target.closest('[data-resize-handle], [data-rotate-handle], .handle-box')) return;
+    if (event.target.closest('[data-resize-handle], [data-rotate-handle]')) return;
 
     moveStart = {
       x: event.clientX,
